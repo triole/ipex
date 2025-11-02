@@ -1,12 +1,15 @@
 package main
 
-import (
-	"os"
+var (
+	localIP string
 )
 
 func main() {
-	cidrs := parseArgs(os.Args[1:])
-	for _, cidr := range cidrs {
+	parseArgs()
+	if CLI.BaseIP != "" {
+		localIP = CLI.BaseIP
+	}
+	for _, cidr := range parseInput(CLI.Input) {
 		displayIPs(cidr)
 	}
 }

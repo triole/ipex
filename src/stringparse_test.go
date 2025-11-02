@@ -30,7 +30,7 @@ func TestParseArgs(t *testing.T) {
 }
 
 func assertParseArgs(inp, exp []string, t *testing.T) {
-	res := parseArgs(inp)
+	res := parseInput(inp)
 	if len(res) != len(exp) {
 		t.Errorf(
 			"result and expecation differ in length: %s -> %s != %s",

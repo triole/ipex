@@ -51,6 +51,9 @@ func displayIPs(cidr string) {
 	}
 
 	if len(ips) <= 2 {
+		for _, ip := range ips {
+			fmt.Printf("%s\n", ip)
+		}
 		return
 	}
 
