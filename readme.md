@@ -1,7 +1,5 @@
 # IPex
 
-## Synopsis
-
 A fast and simple string parser that returns an IP address or a list of them. Accepts CIDR notation or IP fragments. If base IP is not set, unlike in the examples below, the IP of the machine which runs the script is used.
 
 ```go mdox-exec="sh/demo.sh"
