@@ -17,7 +17,7 @@ var (
 )
 
 var CLI struct {
-	Input       []string `help:"input strings, i.e. 192.168.33.1, 192.168.33.1/29, 33.1/30, 1/28, 1" arg:"" optional:"" passthrough:""`
+	Input       []string `help:"input strings, i.e. 192.168.33.1, 192.168.33.1/29, 33.1/30, 1/28, 1, 33+12, 22.5-10" arg:"" optional:"" passthrough:""`
 	BaseIP      string   `help:"base IP, default is self address" optional:"" short:"b"`
 	Sort        bool     `help:"sort final list before output" optional:"" short:"s"`
 	Uniq        bool     `help:"uniq, remove duplicates from the output" optional:"" short:"u"`
