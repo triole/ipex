@@ -52,3 +52,21 @@ A fast and simple string parser that returns an IP address or a list of them. Ac
 255.255.166.108
 
 ```
+
+```go mdox-exec="r -h"
+Usage: ipex [<input> ...] [flags]
+
+ip expander, transform strings into ip addresses
+
+Arguments:
+  [<input> ...]    input strings, i.e. 192.168.33.1, 192.168.33.1/29, 33.1/30,
+                   1/28, 1
+
+Flags:
+  -h, --help              Show context-sensitive help.
+  -b, --base-ip=STRING    base ip used for expanding input strings, default is
+                          self address
+  -s, --sort              sort final list before output
+  -u, --uniq              uniq, remove duplicates from the output
+  -V, --version-flag      display version
+```
