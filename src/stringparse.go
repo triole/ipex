@@ -1,35 +1,35 @@
 package main
 
 import (
-	"fmt"
+	"net/netip"
 )
 
 func parseInput(args []string) (cidrs []string) {
 	for _, arg := range args {
 		nt := notateSplit(arg)
+		nt.expandIP()
 
-		app := nt.Pre
+		var app []string
 		switch nt.Op {
-		case "/", "":
-			if isIPv4Full(nt.Pre) {
-				app = nt.Pre
-			} else if isIPv4Fragment(nt.Pre) || isInt(nt.Pre) {
-				if !isIPv4Full(localIP) {
-					localIP = getLocalIP().String()
-				}
-				app = replaceTail(localIP, nt.Pre)
-			}
-			if nt.Suf != "" {
-				app += nt.Op + nt.Suf
-			}
+		case "":
+			app = []string{nt.Exp}
+		case "/":
+			app = []string{nt.Exp + nt.Op + nt.Suf}
 		case "+":
-			fmt.Println("Tomorrow.")
+			ip := netip.MustParseAddr(nt.Exp)
+			for i := 0; i < nt.SufInt; i++ {
+				app = append(app, ip.String())
+				ip = ip.Next()
+			}
 		case "-":
-			fmt.Println("In two days.")
+			ip := netip.MustParseAddr(nt.Exp)
+			for i := 0; i < nt.SufInt; i++ {
+				app = append(app, ip.String())
+				ip = ip.Prev()
+			}
 		}
-
-		if app != "" {
-			cidrs = append(cidrs, app)
+		if len(app) > 0 {
+			cidrs = append(cidrs, app...)
 		}
 	}
 	return cidrs

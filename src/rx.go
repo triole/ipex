@@ -13,29 +13,6 @@ const (
 	rxIPv4Fragment = `^(?:\d{1,3}\.)+\d{1,3}$`
 )
 
-type tNotation struct {
-	Pre string
-	Op  string
-	Suf string
-}
-
-func notateSplit(str string) (nt tNotation) {
-	arr := rxSplit(`[\+|\-|\/]`, str)
-	if len(arr) > 0 {
-		nt.Pre = arr[0]
-	}
-	if len(arr) > 1 {
-		nt.Suf = arr[1]
-	}
-	nt.Op = rxFind(`[\+|\-|\/]`, str)
-	// if isCIDRNotation(str) {
-	// 	arr = strings.Split(str, "/")
-	// } else {
-	// 	arr = []string{str, "32"}
-	// }
-	return
-}
-
 func isCIDRNotation(str string) bool {
 	return strings.Contains(strings.Trim(str, "."), "/")
 }

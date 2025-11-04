@@ -40,13 +40,13 @@ func displayIPs(cidr string) {
 		return
 	}
 
-	ipAddr, ipNet, err := net.ParseCIDR(cidr)
+	ipAddr, ipNet, err := parseCIDRString(cidr)
 	if err != nil {
 		log.Print(err)
 		return
 	}
 
-	for ip := ipAddr.Mask(ipNet.Mask); ipNet.Contains(ip); increment(ip) {
+	for ip := ipAddr.Mask(ipNet.Mask); ipNet.Contains(ip); incrementIP(ip) {
 		ips = append(ips, ip.String())
 	}
 
@@ -62,11 +62,29 @@ func displayIPs(cidr string) {
 	}
 }
 
-func increment(ip net.IP) {
+func incrementIP(ip net.IP) {
 	for i := len(ip) - 1; i >= 0; i-- {
 		ip[i]++
 		if ip[i] != 0 {
 			break
 		}
 	}
+}
+
+func parseCIDRString(cidr string) (ipAddr net.IP, ipNet *net.IPNet, err error) {
+	ipAddr, ipNet, err = net.ParseCIDR(cidr)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	return
+}
+
+func parseToIPv4(ipstr string) (ip net.IP) {
+	ip = net.ParseIP(ipstr)
+	ip = ip.To4()
+	if ip == nil {
+		log.Fatal("non ipv4 address")
+	}
+	return
 }
