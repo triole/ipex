@@ -28,9 +28,14 @@ func main() {
 		})
 	}
 
-	for _, el := range ipList {
-		fmt.Printf("%s\n", el.String())
+	for i, el := range ipList {
+		if i+1 < len(ipList) {
+			fmt.Printf("%s%s", el.String(), CLI.Separator)
+		} else {
+			fmt.Printf("%s", el.String())
+		}
 	}
+	fmt.Printf("\n")
 }
 
 func removeDuplicates(ipList []netip.Addr) (newList []netip.Addr) {

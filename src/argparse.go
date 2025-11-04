@@ -21,6 +21,7 @@ var CLI struct {
 	BaseIP      string   `help:"base IP, default is self address" optional:"" short:"b"`
 	Sort        bool     `help:"sort final list before output" optional:"" short:"s"`
 	Uniq        bool     `help:"uniq, remove duplicates from the output" optional:"" short:"u"`
+	Separator   string   `help:"separator between printed output addresses" optional:"" default:"\n" short:"p"`
 	VersionFlag bool     `help:"display version" short:"V"`
 }
 
