@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/netip"
 	"sort"
 )
@@ -28,7 +29,7 @@ func main() {
 	}
 
 	for _, el := range ipList {
-		displayIPs(el.String())
+		fmt.Printf("%s\n", el.String())
 	}
 }
 

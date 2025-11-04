@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"net/netip"
 	"strings"
 )
 
@@ -32,7 +33,7 @@ func replaceTail(ip, newTail string) (r string) {
 	return
 }
 
-func displayIPs(cidr string) {
+func parseCIDRtoIPList(cidr string) (ipList []netip.Addr) {
 	var ips []string
 
 	if isIPv4Full(cidr) {
@@ -52,14 +53,15 @@ func displayIPs(cidr string) {
 
 	if len(ips) <= 2 {
 		for _, ip := range ips {
-			fmt.Printf("%s\n", ip)
+			ipList = append(ipList, netip.MustParseAddr(ip))
 		}
 		return
 	}
 
 	for _, ip := range ips[1 : len(ips)-1] {
-		fmt.Println(ip)
+		ipList = append(ipList, netip.MustParseAddr(ip))
 	}
+	return
 }
 
 func incrementIP(ip net.IP) {
