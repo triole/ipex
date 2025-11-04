@@ -38,7 +38,7 @@ func assertParseArgs(inp, exp []string, t *testing.T) {
 		)
 	}
 	for i := 1; i <= len(res)-1; i++ {
-		if exp[i] != res[i] {
+		if exp[i] != res[i].String() {
 			t.Errorf(
 				"result and expectation differ: %s -> %s != %s",
 				inp, exp, res,
