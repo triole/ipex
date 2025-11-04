@@ -1,6 +1,10 @@
 # IPex
 
+## Synopsis
+
 A fast and simple string parser that returns an IP address or a list of them. Accepts CIDR notation or IP fragments. If base IP is not set, unlike in the examples below, the IP of the machine which runs the script is used.
+
+## Examples
 
 ```go mdox-exec="sh/demo.sh"
 # ipex -b 127.0.0.1 22
@@ -53,10 +57,12 @@ A fast and simple string parser that returns an IP address or a list of them. Ac
 
 ```
 
+## Help
+
 ```go mdox-exec="r -h"
 Usage: ipex [<input> ...] [flags]
 
-ip expander, transform strings into ip addresses
+IP expander, transform strings into lists of IP addresses
 
 Arguments:
   [<input> ...]    input strings, i.e. 192.168.33.1, 192.168.33.1/29, 33.1/30,
@@ -64,8 +70,7 @@ Arguments:
 
 Flags:
   -h, --help              Show context-sensitive help.
-  -b, --base-ip=STRING    base ip used for expanding input strings, default is
-                          self address
+  -b, --base-ip=STRING    base IP, default is self address
   -s, --sort              sort final list before output
   -u, --uniq              uniq, remove duplicates from the output
   -V, --version-flag      display version
