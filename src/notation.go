@@ -28,7 +28,9 @@ func notate(str string) (nt tNotation) {
 	if isIPv4Full(nt.Pre) {
 		nt.Exp = nt.Pre
 	} else {
-		localIP = getLocalIP().String()
+		if localIP == "" {
+			localIP = getLocalIP().String()
+		}
 		nt.Exp = replaceTail(localIP, nt.Pre)
 	}
 
