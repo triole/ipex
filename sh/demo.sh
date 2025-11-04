@@ -9,7 +9,7 @@ _rcmd() {
   out="$(echo "${cmd}" | sed "s|^r|ipex|g")"
   echo "# ${out}"
   eval ${cmd}
-  echo ""
+  echo -e "\n"
 }
 
 _rcmd r -b 127.0.0.1 22

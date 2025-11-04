@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"net/netip"
+	"os"
 	"sort"
+
+	"golang.org/x/term"
 )
 
 var (
@@ -35,7 +38,9 @@ func main() {
 			fmt.Printf("%s", el.String())
 		}
 	}
-	fmt.Printf("\n")
+	if term.IsTerminal(int(os.Stdout.Fd())) {
+		fmt.Printf("\n")
+	}
 }
 
 func removeDuplicates(ipList []netip.Addr) (newList []netip.Addr) {
