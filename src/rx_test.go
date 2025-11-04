@@ -3,14 +3,32 @@ package main
 import "testing"
 
 func TestIsIPFull(t *testing.T) {
-	assertCidrNotateSplit("192.168.33.1", []string{"192.168.33.1", "32"}, t)
-	assertCidrNotateSplit("192.168.33.1/30", []string{"192.168.33.1", "30"}, t)
-	assertCidrNotateSplit("255.255.0.0", []string{"255.255.0.0", "32"}, t)
-	assertCidrNotateSplit("255.255.0.0/16", []string{"255.255.0.0", "16"}, t)
-	assertCidrNotateSplit("255.0", []string{"255.0", "32"}, t)
-	assertCidrNotateSplit("255.0/8", []string{"255.0", "8"}, t)
-	assertCidrNotateSplit("1", []string{"1", "32"}, t)
-	assertCidrNotateSplit("1/30", []string{"1", "30"}, t)
+	assertNotateSplit("192.168.33.1", newNt("192.168.33.1"), t)
+	assertNotateSplit("192.168.33.1/30", newNt("192.168.33.1", "/", "30"), t)
+	assertNotateSplit("255.255.0.0", newNt("255.255.0.0"), t)
+	assertNotateSplit("255.255.0.0/16", newNt("255.255.0.0", "/", "16"), t)
+	assertNotateSplit("255.0", newNt("255.0"), t)
+	assertNotateSplit("255.0/8", newNt("255.0", "/", "8"), t)
+	assertNotateSplit("1", newNt("1"), t)
+	assertNotateSplit("1/30", newNt("1", "/", "30"), t)
+
+	assertNotateSplit("192.168.33.1", newNt("192.168.33.1"), t)
+	assertNotateSplit("192.168.33.1+30", newNt("192.168.33.1", "+", "30"), t)
+	assertNotateSplit("255.255.0.0", newNt("255.255.0.0"), t)
+	assertNotateSplit("255.255.0.0+16", newNt("255.255.0.0", "+", "16"), t)
+	assertNotateSplit("255.0", newNt("255.0"), t)
+	assertNotateSplit("255.0+8", newNt("255.0", "+", "8"), t)
+	assertNotateSplit("1", newNt("1"), t)
+	assertNotateSplit("1+30", newNt("1", "+", "30"), t)
+
+	assertNotateSplit("192.168.33.1", newNt("192.168.33.1"), t)
+	assertNotateSplit("192.168.33.1-30", newNt("192.168.33.1", "-", "30"), t)
+	assertNotateSplit("255.255.0.0", newNt("255.255.0.0"), t)
+	assertNotateSplit("255.255.0.0-16", newNt("255.255.0.0", "-", "16"), t)
+	assertNotateSplit("255.0", newNt("255.0"), t)
+	assertNotateSplit("255.0-8", newNt("255.0", "-", "8"), t)
+	assertNotateSplit("1", newNt("1"), t)
+	assertNotateSplit("1-30", newNt("1", "-", "30"), t)
 
 	assertIsCIDRNotation("192.168.33.1", false, t)
 	assertIsCIDRNotation("192.168.33.1/30", true, t)
@@ -40,21 +58,13 @@ func TestIsIPFull(t *testing.T) {
 	assertIsInt("1", true, t)
 }
 
-func assertCidrNotateSplit(inp string, exp []string, t *testing.T) {
-	res := cidrNotateSplit(inp)
-	if len(res) != len(exp) {
+func assertNotateSplit(inp string, exp tNotation, t *testing.T) {
+	res := notateSplit(inp)
+	if res.Pre != exp.Pre || res.Op != exp.Op || res.Suf != exp.Suf {
 		t.Errorf(
-			"result and expecation differ in length: %s -> %s != %s",
+			"notateSplit failed: %s -> %s != %s",
 			inp, exp, res,
 		)
-	}
-	for i := 1; i <= len(res)-1; i++ {
-		if exp[i] != res[i] {
-			t.Errorf(
-				"result and expectation differ: %s -> %s != %s",
-				inp, exp, res,
-			)
-		}
 	}
 }
 
@@ -84,4 +94,17 @@ func assertIsInt(inp string, exp bool, t *testing.T) {
 	if res != exp {
 		t.Errorf("isInt failed: %s -> %v != %v", inp, exp, res)
 	}
+}
+
+func newNt(params ...any) (nt tNotation) {
+	if len(params) > 0 {
+		nt.Pre = params[0].(string)
+	}
+	if len(params) > 1 {
+		nt.Op = params[1].(string)
+	}
+	if len(params) > 2 {
+		nt.Suf = params[2].(string)
+	}
+	return nt
 }
