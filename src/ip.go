@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net"
 	"net/netip"
@@ -35,11 +34,6 @@ func replaceTail(ip, newTail string) (r string) {
 
 func parseCIDRtoIPList(cidr string) (ipList []netip.Addr) {
 	var ips []string
-
-	if isIPv4Full(cidr) {
-		fmt.Println(cidr)
-		return
-	}
 
 	ipAddr, ipNet, err := parseCIDRString(cidr)
 	if err != nil {
@@ -78,15 +72,6 @@ func parseCIDRString(cidr string) (ipAddr net.IP, ipNet *net.IPNet, err error) {
 	if err != nil {
 		log.Print(err)
 		return
-	}
-	return
-}
-
-func parseToIPv4(ipstr string) (ip net.IP) {
-	ip = net.ParseIP(ipstr)
-	ip = ip.To4()
-	if ip == nil {
-		log.Fatal("non ipv4 address")
 	}
 	return
 }

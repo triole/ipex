@@ -6,8 +6,7 @@ import (
 
 func parseInput(args []string) (cidrs []netip.Addr) {
 	for _, arg := range args {
-		nt := notateSplit(arg)
-		nt.expandIP()
+		nt := notate(arg)
 
 		var app []netip.Addr
 		switch nt.Op {
@@ -17,7 +16,6 @@ func parseInput(args []string) (cidrs []netip.Addr) {
 			for _, el := range parseCIDRtoIPList(nt.Exp + nt.Op + nt.Suf) {
 				app = append(app, el)
 			}
-			// app = []netip.Addr{netip.MustParseAddr(nt.Exp + nt.Op + nt.Suf)}
 		case "+":
 			ip := netip.MustParseAddr(nt.Exp)
 			for i := 0; i < nt.SufInt; i++ {

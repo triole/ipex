@@ -18,12 +18,6 @@ func TestNotations(t *testing.T) {
 	assertIsIPv4Full("255.0", false, t)
 	assertIsIPv4Full("1", false, t)
 
-	assertIsIPv4Fragment("192.168.33.1", true, t)
-	assertIsIPv4Fragment("255.255.0.0", true, t)
-	assertIsIPv4Fragment("255.255.0", true, t)
-	assertIsIPv4Fragment("255.0", true, t)
-	assertIsIPv4Fragment("1", false, t)
-
 	assertIsInt("192.168.33.1", false, t)
 	assertIsInt("255.255.0.0", false, t)
 	assertIsInt("255.255.0", false, t)
@@ -42,13 +36,6 @@ func assertIsIPv4Full(inp string, exp bool, t *testing.T) {
 	res := isIPv4Full(inp)
 	if res != exp {
 		t.Errorf("isIPv4Full failed: %s -> %v != %v", inp, exp, res)
-	}
-}
-
-func assertIsIPv4Fragment(inp string, exp bool, t *testing.T) {
-	res := isIPv4Fragment(inp)
-	if res != exp {
-		t.Errorf("isIPv4Fragment failed: %s -> %v != %v", inp, exp, res)
 	}
 }
 

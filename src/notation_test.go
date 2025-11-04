@@ -46,12 +46,6 @@ func TestIsIPFull(t *testing.T) {
 	assertIsIPv4Full("255.0", false, t)
 	assertIsIPv4Full("1", false, t)
 
-	assertIsIPv4Fragment("192.168.33.1", true, t)
-	assertIsIPv4Fragment("255.255.0.0", true, t)
-	assertIsIPv4Fragment("255.255.0", true, t)
-	assertIsIPv4Fragment("255.0", true, t)
-	assertIsIPv4Fragment("1", false, t)
-
 	assertIsInt("192.168.33.1", false, t)
 	assertIsInt("255.255.0.0", false, t)
 	assertIsInt("255.255.0", false, t)
@@ -60,7 +54,7 @@ func TestIsIPFull(t *testing.T) {
 }
 
 func assertNotateSplit(inp string, exp tNotation, t *testing.T) {
-	res := notateSplit(inp)
+	res := notate(inp)
 	if res.Pre != exp.Pre || res.Op != exp.Op || res.Suf != exp.Suf {
 		t.Errorf(
 			"notateSplit failed: %s -> %v != %v",

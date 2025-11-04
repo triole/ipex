@@ -13,7 +13,7 @@ type tNotation struct {
 	SufInt int
 }
 
-func notateSplit(str string) (nt tNotation) {
+func notate(str string) (nt tNotation) {
 	nt.Exp = str
 	arr := rxSplit(`[\+|\-|\/]`, str)
 	if len(arr) > 0 {
@@ -24,16 +24,13 @@ func notateSplit(str string) (nt tNotation) {
 	}
 	nt.SufInt, _ = strconv.Atoi(strings.Trim(nt.Suf, "."))
 	nt.Op = rxFind(`[\+|\-|\/]`, str)
-	return
-}
 
-func (nt *tNotation) expandIP() {
 	if isIPv4Full(nt.Pre) {
 		nt.Exp = nt.Pre
-	} else if isIPv4Fragment(nt.Pre) || isInt(nt.Pre) {
-		if !isIPv4Full(localIP) {
-			localIP = getLocalIP().String()
-		}
+	} else {
+		localIP = getLocalIP().String()
 		nt.Exp = replaceTail(localIP, nt.Pre)
 	}
+
+	return
 }

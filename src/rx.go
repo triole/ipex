@@ -9,8 +9,7 @@ import (
 )
 
 const (
-	rxIPv4Full     = `^(?:\d{1,3}\.){3}\d{1,3}$`
-	rxIPv4Fragment = `^(?:\d{1,3}\.)+\d{1,3}$`
+	rxIPv4Full = `^(?:\d{1,3}\.){3}\d{1,3}$`
 )
 
 func isCIDRNotation(str string) bool {
@@ -26,10 +25,6 @@ func isInt(str string) bool {
 
 func isIPv4Full(str string) bool {
 	return rxMatch(rxIPv4Full, strings.Trim(str, "."))
-}
-
-func isIPv4Fragment(str string) bool {
-	return rxMatch(rxIPv4Fragment, strings.Trim(str, "."))
 }
 
 func rxCompile(str string) (r *regexp.Regexp) {
